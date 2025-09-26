@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "archives.tater.blackknife.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "EntityRendererMixin",
+    "EntityRenderManagerMixin",
+    "ItemRenderStateMixin",
+    "LivingEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

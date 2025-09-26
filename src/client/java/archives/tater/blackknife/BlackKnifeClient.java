@@ -1,0 +1,48 @@
+package archives.tater.blackknife;
+
+import archives.tater.blackknife.registry.BlackKnifeItems;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
+
+import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Hand;
+
+import org.jetbrains.annotations.ApiStatus.Internal;
+
+import java.util.*;
+
+public class BlackKnifeClient implements ClientModInitializer {
+    public static final int AFTERIMAGE_COUNT = 6;
+    public static final int AFTERIMAGE_RATE = 2;
+    public static final int MAX_AFTERIMAGE_OPACITY = 192;
+
+    public static final RenderStateDataKey<EntityRenderState[]> AFTERIMAGES = RenderStateDataKey.create(() -> "afterimages");
+
+    @Internal
+    public static int opacity = -1;
+
+    public static final Map<Entity, Deque<EntityRenderState>> AFTERIMAGE_CACHE = new WeakHashMap<>();
+
+    public static Deque<EntityRenderState> getAfterimages(Entity entity) {
+        return AFTERIMAGE_CACHE.computeIfAbsent(entity, _entity -> new LinkedList<>());
+    }
+
+    public static void addAfterimage(Deque<EntityRenderState> afterimages, EntityRenderState state) {
+        afterimages.offerFirst(state);
+        while (afterimages.size() > AFTERIMAGE_COUNT)
+            afterimages.removeLast();
+    }
+
+    public static boolean hasAfterimages(Entity entity) {
+        return entity instanceof LivingEntity livingEntity && Arrays.stream(Hand.values()).anyMatch(hand -> livingEntity.getStackInHand(hand).isOf(BlackKnifeItems.BLACK_KNIFE));
+    }
+
+
+    @Override
+	public void onInitializeClient() {
+		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
+	}
+}
