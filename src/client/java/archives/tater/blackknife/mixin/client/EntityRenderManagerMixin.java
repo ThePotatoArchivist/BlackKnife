@@ -30,10 +30,11 @@ public class EntityRenderManagerMixin {
         for (var afterimage : afterimages) {
             matrices.push();
             var ageDiff = renderState.age - afterimage.age;
-            matrices.translate(afterimage.x - renderState.x - 0.125 * ageDiff, afterimage.y - renderState.y, afterimage.z - renderState.z);
-            BlackKnifeClient.opacity = clamp((int) (MAX_AFTERIMAGE_OPACITY * (1 - ageDiff / (AFTERIMAGE_COUNT * AFTERIMAGE_RATE))), 0, 255);
+            matrices.translate(afterimage.x - renderState.x - AFTERIMAGE_SPEED * ageDiff, afterimage.y - renderState.y, afterimage.z - renderState.z);
+            var fadeTicks = ageDiff - AFTERIMAGE_COUNT * AFTERIMAGE_RATE + AFTERIMAGE_FADE_LENGTH;
+            BlackKnifeClient.alpha = fadeTicks <= 0 ? MAX_AFTERIMAGE_OPACITY : clamp((int) (MAX_AFTERIMAGE_OPACITY * (1 - fadeTicks / AFTERIMAGE_FADE_LENGTH)), 0, 255);
             original.call(instance, afterimage, matrices, queue, cameraRenderState);
-            BlackKnifeClient.opacity = -1;
+            BlackKnifeClient.alpha = -1;
             matrices.pop();
         }
     }

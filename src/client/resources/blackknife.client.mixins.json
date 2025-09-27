@@ -5,10 +5,12 @@
   "client": [
     "EntityRendererMixin",
     "EntityRenderManagerMixin",
+    "EquipmentRendererMixin",
     "ItemRenderStateMixin",
+    "LivingEntityMixin",
     "LivingEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

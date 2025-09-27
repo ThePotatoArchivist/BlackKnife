@@ -12,7 +12,7 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 
-import static archives.tater.blackknife.BlackKnifeClient.AFTERIMAGE_RATE;
+import static archives.tater.blackknife.BlackKnifeClient.*;
 import static net.minecraft.util.math.MathHelper.sin;
 
 @Mixin(EntityRenderer.class)
@@ -35,6 +35,6 @@ public class EntityRendererMixin<T extends Entity, S extends EntityRenderState> 
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(DDD)D", ordinal = 1)
     )
     private double bob(double original, @Local(argsOnly = true) T entity, @Local(argsOnly = true) float tickProgress) {
-        return BlackKnifeClient.hasAfterimages(entity) ? original + 0.125 * (1 + sin(0.1875f * (entity.age + tickProgress))) : original;
+        return BlackKnifeClient.hasAfterimages(entity) ? original + HOVER_AMOUNT * (1 + sin(HOVER_RATE_COEFFICIENT * (entity.age + tickProgress))) : original;
     }
 }

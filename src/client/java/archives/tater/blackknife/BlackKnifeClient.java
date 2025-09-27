@@ -11,7 +11,6 @@ import net.minecraft.client.particle.SweepAttackParticle;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.util.Hand;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -21,12 +20,16 @@ import java.util.*;
 public class BlackKnifeClient implements ClientModInitializer {
     public static final int AFTERIMAGE_COUNT = 6;
     public static final int AFTERIMAGE_RATE = 2;
-    public static final int MAX_AFTERIMAGE_OPACITY = 192;
+    public static final int MAX_AFTERIMAGE_OPACITY = 95;
+    public static final int AFTERIMAGE_FADE_LENGTH = 6;
+    public static final double AFTERIMAGE_SPEED = 0.125;
+    public static final float HOVER_RATE_COEFFICIENT = 0.1875f;
+    public static final double HOVER_AMOUNT = 0.125;
 
     public static final RenderStateDataKey<EntityRenderState[]> AFTERIMAGES = RenderStateDataKey.create(() -> "afterimages");
 
     @Internal
-    public static int opacity = -1;
+    public static int alpha = -1;
 
     public static final Map<Entity, Deque<EntityRenderState>> AFTERIMAGE_CACHE = new WeakHashMap<>();
 
@@ -41,7 +44,7 @@ public class BlackKnifeClient implements ClientModInitializer {
     }
 
     public static boolean hasAfterimages(Entity entity) {
-        return entity instanceof TridentEntity || entity instanceof LivingEntity livingEntity && Arrays.stream(Hand.values()).anyMatch(hand -> livingEntity.getStackInHand(hand).isOf(BlackKnifeItems.BLACK_KNIFE));
+        return entity instanceof LivingEntity livingEntity && Arrays.stream(Hand.values()).anyMatch(hand -> livingEntity.getStackInHand(hand).isOf(BlackKnifeItems.BLACK_KNIFE));
     }
 
 
