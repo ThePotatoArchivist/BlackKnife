@@ -1,5 +1,6 @@
 package archives.tater.blackknife;
 
+import archives.tater.blackknife.registry.BlackKnifeComponents;
 import archives.tater.blackknife.registry.BlackKnifeItems;
 import archives.tater.blackknife.registry.BlackKnifeParticles;
 
@@ -22,7 +23,7 @@ public class BlackKnife implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	@Override
+    @Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
@@ -31,6 +32,7 @@ public class BlackKnife implements ModInitializer {
 		LOGGER.info("It's Roaring time");
         // It then proceeded to roar all over the place
 
+        BlackKnifeComponents.init();
         BlackKnifeItems.init();
         BlackKnifeParticles.init();
 	}
