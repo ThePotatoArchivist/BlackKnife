@@ -1,10 +1,13 @@
 package archives.tater.blackknife;
 
 import archives.tater.blackknife.registry.BlackKnifeItems;
+import archives.tater.blackknife.registry.BlackKnifeParticles;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 
+import net.minecraft.client.particle.SweepAttackParticle;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -44,5 +47,6 @@ public class BlackKnifeClient implements ClientModInitializer {
     @Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
+        ParticleFactoryRegistry.getInstance().register(BlackKnifeParticles.BLACK_KNIFE_SWEEP, SweepAttackParticle.Factory::new);
 	}
 }

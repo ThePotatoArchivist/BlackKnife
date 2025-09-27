@@ -1,6 +1,7 @@
 package archives.tater.blackknife;
 
 import archives.tater.blackknife.registry.BlackKnifeItems;
+import archives.tater.blackknife.registry.BlackKnifeParticles;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -28,7 +29,9 @@ public class BlackKnife implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("It's Roaring time");
+        // It then proceeded to roar all over the place
 
         BlackKnifeItems.init();
+        BlackKnifeParticles.init();
 	}
 }
