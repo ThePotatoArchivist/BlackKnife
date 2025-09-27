@@ -11,6 +11,7 @@ import net.minecraft.client.particle.SweepAttackParticle;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.util.Hand;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -40,7 +41,7 @@ public class BlackKnifeClient implements ClientModInitializer {
     }
 
     public static boolean hasAfterimages(Entity entity) {
-        return entity instanceof LivingEntity livingEntity && Arrays.stream(Hand.values()).anyMatch(hand -> livingEntity.getStackInHand(hand).isOf(BlackKnifeItems.BLACK_KNIFE));
+        return entity instanceof TridentEntity || entity instanceof LivingEntity livingEntity && Arrays.stream(Hand.values()).anyMatch(hand -> livingEntity.getStackInHand(hand).isOf(BlackKnifeItems.BLACK_KNIFE));
     }
 
 

@@ -1,0 +1,6 @@
+{
+  "parent": "blackknife:item/handheld_large",
+  "textures": {
+    "layer0": "blackknife:item/black_knife_in_hand"
+  }
+}

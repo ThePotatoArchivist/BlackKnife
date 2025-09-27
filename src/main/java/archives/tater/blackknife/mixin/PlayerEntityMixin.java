@@ -29,12 +29,15 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             method = "attack",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;onAttacking(Lnet/minecraft/entity/Entity;)V")
     )
-    private void spawnSweepParticles(Entity target, CallbackInfo ci, @Local ItemStack weapon, @Local(ordinal = 3) boolean sweepAttack) {
-        if (!weapon.isOf(BlackKnifeItems.BLACK_KNIFE)) return;
+    private void spawnSweepParticles(Entity target, CallbackInfo ci, @Local ItemStack weapon, @Local(ordinal = 0) boolean cooldownDone, @Local(ordinal = 3) boolean sweepAttack) {
+        if (!cooldownDone || !weapon.isOf(BlackKnifeItems.BLACK_KNIFE)) return;
         double d = -MathHelper.sin(getYaw() * (float) (Math.PI / 180.0));
         double e = MathHelper.cos(getYaw() * (float) (Math.PI / 180.0));
-        if (getEntityWorld() instanceof ServerWorld serverWorld)
-            serverWorld.spawnParticles(BlackKnifeParticles.BLACK_KNIFE_SWEEP, sweepAttack ? getX() + d : target.getX() - d, (sweepAttack ? this : target).getBodyY(0.5), sweepAttack ? getZ() + e : target.getZ() - e, 0, d, 0.0, e, 0.0);
+        if (getEntityWorld() instanceof ServerWorld serverWorld) {
+            serverWorld.spawnParticles(BlackKnifeParticles.BLACK_KNIFE_SWEEP, target.getX() - d, target.getBodyY(0.5), target.getZ() - e, 0, d, 0.0, e, 0.0);
+            if (sweepAttack)
+                serverWorld.spawnParticles(BlackKnifeParticles.BLACK_KNIFE_SWEEP, getX() + d, getBodyY(0.5), getZ() + e, 0, d, 0.0, e, 0.0);
+        }
     }
 
     @WrapWithCondition(

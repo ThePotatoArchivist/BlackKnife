@@ -1,5 +1,5 @@
 {
-  "parent": "blackknife:item/handheld_large",
+  "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "blackknife:item/black_knife"
   }
